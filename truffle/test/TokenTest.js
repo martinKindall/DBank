@@ -2,6 +2,11 @@ const MyToken = artifacts.require("Token");
 const DBank = artifacts.require("DBank");
 
 contract('Token and DBank', ([deployer, user]) => {
+  it('Check token properties are correct', async() => {
+    const token = await MyToken.deployed();
+    const symbol = await token.symbol();
+    assert.equal(symbol, 'DBC');
+  });
 
   it('Passing mint role properly at new Token instance', async() => {
     const token = await MyToken.new();
