@@ -83,6 +83,7 @@ contract('Token and DBank', ([deployer, user]) => {
       dBank = await DBank.new(token.address);
       await token.passMinterRole(dBank.address, {from: deployer});
     });
+
     it('User gets tokens after a while', async() => {
       const tokenBalance0 = await token.balanceOf(user);
 
@@ -93,6 +94,18 @@ contract('Token and DBank', ([deployer, user]) => {
       await dBank.withdraw({from: user});
       const tokenBalance1 = await token.balanceOf(user);
       assert.isAbove(Number(tokenBalance1), 0);
+    });
+
+    it('DBank reduces its balance after withdraw', async() => {
+      const dBankBalance = await token.balanceOf(user);
+      await dBank.deposit({value: 10**16, from: user});
+      const initialBalance = await web3.eth.getBalance(dBank.address);
+      await helpers.wait(4);
+      await dBank.withdraw({from: user});
+      const finalBalance = await web3.eth.getBalance(dBank.address);
+
+      assert.isAbove(Number(initialBalance), Number(finalBalance));
+      assert.equal(0, Number(finalBalance));
     });
   });
 });
