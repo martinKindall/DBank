@@ -48,9 +48,11 @@ contract('Token and DBank', ([deployer, user]) => {
       it('DBank should have increased Balance', async() => {
         const initialBalance = await web3.eth.getBalance(dBank.address);
         assert.equal(0, initialBalance);
+        assert.equal(await dBank.etherBalanceOf(user), 0);
         await dBank.deposit({value: 10**16, from: user});  // 0.01 ETH
         const finalBalance = await web3.eth.getBalance(dBank.address);
         assert.equal(0.01, web3.utils.fromWei(finalBalance, 'ether'));
+        assert.equal(await dBank.etherBalanceOf(user), 10**16);
       });
     });
   });

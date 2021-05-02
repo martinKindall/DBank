@@ -15,4 +15,9 @@ contract Token is ERC20 {
     minter = dBank;
     return true;
   }
+
+  function mint(address account, uint256 amount) public {
+    require(msg.sender == minter, 'Error, only the minter can mint.');
+    _mint(account, amount);
+  }
 }
