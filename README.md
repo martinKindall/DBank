@@ -1,27 +1,30 @@
 # MyDbank
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.7.
+A decentralized Bank based on Smart Contracts made in Solidity and running on Ethereum Blockchain, for learning purpouses.
+The proyect idea is based on this one from [Dapp University](https://github.com/dappuniversity/dbank).
 
-## Development server
+## Install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+npm install 
+cd truffle
+npm install # yes, there are two package.jsons, one for the frontend and another for truffle
+```
 
-## Code scaffolding
+## Compile and Migrate Smart Contracts
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+First, make sure you are running a local ERC20 blockchain, for example [Ganache](https://www.trufflesuite.com/ganache).
+Verify that the _development_ network configured in __truffle-config.js__ matches your params, else modify them. 
+Then, just execute _truffle_ commands:
 
-## Build
+```bash
+cd truffle/
+truffle compile
+truffle migrate
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Run Truffle Tests
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+truffle test
+```
