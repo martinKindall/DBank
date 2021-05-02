@@ -1,5 +1,8 @@
+const helpers = require('./helpers');
+
 const MyToken = artifacts.require("Token");
 const DBank = artifacts.require("DBank");
+
 
 contract('Token and DBank', ([deployer, user]) => {
   it('Check token properties are correct', async() => {
@@ -68,6 +71,28 @@ contract('Token and DBank', ([deployer, user]) => {
             );
         }
       });
+    });
+  });
+
+  describe('Testing withdraw', () => {
+    let dBank;
+    let token;
+
+    beforeEach(async() => {
+      token = await MyToken.new();
+      dBank = await DBank.new(token.address);
+      await token.passMinterRole(dBank.address, {from: deployer});
+    });
+    it('User gets tokens after a while', async() => {
+      const tokenBalance0 = await token.balanceOf(user);
+
+      assert.equal(0, Number(tokenBalance0));
+      
+      await dBank.deposit({value: 10**16, from: user});
+      await helpers.wait(4);
+      await dBank.withdraw({from: user});
+      const tokenBalance1 = await token.balanceOf(user);
+      assert.isAbove(Number(tokenBalance1), 0);
     });
   });
 });

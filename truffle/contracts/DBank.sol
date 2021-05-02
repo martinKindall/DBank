@@ -22,4 +22,19 @@ contract DBank {
         isDeposited[msg.sender] = true;
         depositStart[msg.sender] = block.timestamp;
     }
+
+    function withdraw() public  {
+        require(isDeposited[msg.sender] == true, 'Error, user has no funds in the dBank.');
+
+        uint depositTime = block.timestamp - depositStart[msg.sender];
+        uint interestPerSecond = 31668017 * (etherBalanceOf[msg.sender] / 1e16);
+        uint interest = depositTime * interestPerSecond;
+
+        msg.sender.transfer(etherBalanceOf[msg.sender]);
+        token.mint(msg.sender, interest);
+
+        etherBalanceOf[msg.sender] = 0;
+        depositStart[msg.sender] = 0;
+        isDeposited[msg.sender] = false;
+    }
 }
