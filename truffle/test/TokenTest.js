@@ -30,6 +30,18 @@ contract('Token and DBank', ([deployer, user]) => {
     }
   });
 
+  it('Only minter can Mint', async() => {
+    const token = await MyToken.deployed();
+    try {
+      await token.mint(user, 10**2, {from: user});
+    } catch (err) {
+      assert.equal(
+        err.reason, 
+        'Error, only the minter can mint.'
+        );
+    }
+  });
+
   it('Checking DBank has minting Role', async() => {
     const token = await MyToken.deployed();
     const minterAddress = await token.minter();
@@ -106,6 +118,17 @@ contract('Token and DBank', ([deployer, user]) => {
 
       assert.isAbove(Number(initialBalance), Number(finalBalance));
       assert.equal(0, Number(finalBalance));
+    });
+
+    it('Cannot withdraw without deposit', async() => {
+      try {
+        await dBank.withdraw({from: user});
+      } catch(err) {
+        assert.equal(
+          err.reason, 
+          'Error, user has no funds in the dBank.'
+          );
+      }
     });
   });
 });
