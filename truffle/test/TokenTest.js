@@ -36,15 +36,15 @@ contract('Token and DBank', ([deployer, user]) => {
   });
 
   describe('Testing deposit', () => {
+    let dBank;
+
+    beforeEach(async() => {
+      const token = await MyToken.new();
+      dBank = await DBank.new(token.address);
+      await token.passMinterRole(dBank.address, {from: deployer});
+    });
+
     describe('Success', () => {
-      let dBank;
-      
-      beforeEach(async() => {
-        const token = await MyToken.new();
-        dBank = await DBank.new(token.address);
-        await token.passMinterRole(dBank.address, {from: deployer});
-      });
-      
       it('DBank should have increased Balance', async() => {
         const initialBalance = await web3.eth.getBalance(dBank.address);
         assert.equal(0, initialBalance);
@@ -53,6 +53,20 @@ contract('Token and DBank', ([deployer, user]) => {
         const finalBalance = await web3.eth.getBalance(dBank.address);
         assert.equal(0.01, web3.utils.fromWei(finalBalance, 'ether'));
         assert.equal(await dBank.etherBalanceOf(user), 10**16);
+      });
+    });
+
+    describe('Fail', () => {
+      it('Already Deposited', async() => {
+        await dBank.deposit({value: 10**16, from: user});
+        try {
+          await dBank.deposit({value: 10**16, from: user});
+        } catch(err) {
+          assert.equal(
+            err.reason, 
+            'Error, deposit already active'
+            );
+        }
       });
     });
   });
