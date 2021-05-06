@@ -7,10 +7,26 @@
   <div class="row">
     <div class="col-12">
       <mat-tab-group>
-        <mat-tab label="First">
-          <p class="h4 my-2">Contenido 1</p>
+        <mat-tab label="Depositar">
+          <div class="container my-2">
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                  <label for="deposit_amount">Ingrese una cantidad</label>
+                  <input type="number"
+                         class="form-control"
+                         id="deposit_amount" name="quantity" min="0.01" step="0.01">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <button type="button" class="btn btn-primary">Depositar</button>
+              </div>
+            </div>
+          </div>
         </mat-tab>
-        <mat-tab label="Second">
+        <mat-tab label="Retirar">
           <p class="h4 my-2">Contenido 2</p>
         </mat-tab>
       </mat-tab-group>
