@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {WalletService} from '../services/WalletService';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   depositAmount: number;
 
-  constructor() {
+  constructor(private walltetService: WalletService) {
     this.depositAmount = 0.01;
   }
 
