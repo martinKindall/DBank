@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
       .then();
   }
 
-  private updateBalance(): Promise<any> {
+  updateBalance(): Promise<any> {
     return this.accountState?.balance().then((balance) => {
       this.balance = balance;
     }) || Promise.resolve();
