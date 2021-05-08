@@ -1,12 +1,16 @@
 const Token = artifacts.require("Token");
 const DBank = artifacts.require("DBank");
 
-module.exports = async function(deployer) {
-	await deployer.deploy(Token);
 
-	const token = await Token.deployed();
-	await deployer.deploy(DBank, token.address);
-
-	const dBank = await DBank.deployed();
-	await token.passMinterRole(dBank.address);
+module.exports = function(deployer) {
+	console.log('I was here!');
+	let myToken;
+	deployer.deploy(Token)
+	.then(() => Token.deployed())
+	.then((token) => {
+		myToken = token;
+		return deployer.deploy(DBank, token.address);
+	})
+	.then(() =>  DBank.deployed())
+	.then((dBank) =>  myToken.passMinterRole(dBank.address));
 }
