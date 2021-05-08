@@ -15,6 +15,7 @@ export class Metamask implements WalletService {
     const ethereum = window.ethereum;
     if (typeof ethereum !== 'undefined'){
       const web3 = new Web3(ethereum);
+      await ethereum.enable();
       const netId = await web3.eth.net.getId();
       console.log(netId);
       const accounts = await web3.eth.getAccounts();
