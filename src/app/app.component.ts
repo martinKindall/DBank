@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
     }
 
   depositar(): void {
-    console.log(this.depositAmount);
+    this.accountState?.dBank.deposit((this.depositAmount))
+      .then();
   }
 }

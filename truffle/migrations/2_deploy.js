@@ -3,7 +3,6 @@ const DBank = artifacts.require("DBank");
 
 
 module.exports = function(deployer) {
-	console.log('I was here!');
 	let myToken;
 	deployer.deploy(Token)
 	.then(() => Token.deployed())
