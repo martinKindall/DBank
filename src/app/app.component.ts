@@ -9,12 +9,11 @@ import {AccountState} from '../interfaces/AccountState';
 })
 export class AppComponent implements OnInit {
   depositAmount: number;
-  accountState: AccountState;
+  accountState?: AccountState;
   loadedBalance = false;
 
   constructor(private walltetService: WalletService) {
     this.depositAmount = 0.01;
-    this.accountState = {balance: 0};
   }
 
   ngOnInit(): void {
