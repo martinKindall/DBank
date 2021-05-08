@@ -1,4 +1,4 @@
 
 export interface DBank {
-  deposit(): Promise<any>;
+  deposit(value: string): Promise<any>;
 }
