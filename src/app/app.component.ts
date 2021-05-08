@@ -10,6 +10,7 @@ import {AccountState} from '../interfaces/AccountState';
 export class AppComponent implements OnInit {
   depositAmount: number;
   accountState?: AccountState;
+  balance?: number;
   loadedBalance = false;
 
   constructor(private walltetService: WalletService) {
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
         this.walltetService.init()
           .then((accState) => {
             this.accountState = accState;
-            this.loadedBalance = true;
+            this.updateBalance().then(() => this.loadedBalance = true);
           })
           .catch((error) => {
             console.error(error);
@@ -30,6 +31,12 @@ export class AppComponent implements OnInit {
 
   depositar(): void {
     this.accountState?.dBank.deposit((this.depositAmount))
-      .then();
+      .then(() => this.updateBalance);
+  }
+
+  private updateBalance(): Promise<any> {
+    return this.accountState?.balance().then((balance) => {
+      this.balance = balance;
+    }) || Promise.resolve();
   }
 }

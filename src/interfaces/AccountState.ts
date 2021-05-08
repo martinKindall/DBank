@@ -1,6 +1,6 @@
 import {DBank} from './DBank';
 
 export interface AccountState {
-  balance: number;
+  balance: () => Promise<number>;
   dBank: DBank;
 }

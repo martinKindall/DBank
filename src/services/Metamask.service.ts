@@ -28,7 +28,7 @@ export class Metamask implements WalletService {
       const selectedAccount = accounts[0];
 
       if (typeof selectedAccount !== 'undefined') {
-        const balance = web3.utils.fromWei(await web3.eth.getBalance(selectedAccount));
+        const balance = async () => web3.utils.fromWei(await web3.eth.getBalance(selectedAccount));
         const dBank = this.initDBank(web3, netId, selectedAccount);
         console.log(`The balance is ${balance}`);
         return Promise.resolve({balance, dBank});
