@@ -17,14 +17,14 @@ export class Metamask implements WalletService {
       const web3 = new Web3(ethereum);
       const netId = await web3.eth.net.getId();
       console.log(netId);
-      // const accounts = await web3.eth.getAccounts();
-      //
-      // if (typeof accounts[0] !== 'undefined') {
-      //   const balance = await web3.eth.getBalance(accounts[0]);
-      //   console.log(`The balance is ${balance}`);
-      // } else {
-      //   alert('Please login with MetaMask');
-      // }
+      const accounts = await web3.eth.getAccounts();
+
+      if (typeof accounts[0] !== 'undefined') {
+        const balance = await web3.eth.getBalance(accounts[0]);
+        console.log(`The balance is ${balance}`);
+      } else {
+        alert('Please login with MetaMask and connect the account to this site.');
+      }
     } else {
       alert('Enable Metamask!');
     }
