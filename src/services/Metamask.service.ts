@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {WalletService} from './WalletService';
 import {AccountState} from '../interfaces/AccountState';
+import {DBank} from '../interfaces/DBank';
 // @ts-ignore
 const Web3 = require('web3');
 
@@ -25,8 +26,9 @@ export class Metamask implements WalletService {
 
       if (typeof accounts[0] !== 'undefined') {
         const balance = web3.utils.fromWei(await web3.eth.getBalance(accounts[0]));
+        const dBank = this.initDBank();
         console.log(`The balance is ${balance}`);
-        return Promise.resolve({balance});
+        return Promise.resolve({balance, dBank});
       } else {
         errMsg = 'Please login with MetaMask and connect the account to this site.';
         alert(errMsg);
@@ -41,5 +43,9 @@ export class Metamask implements WalletService {
 
   public deposit(amount: number): Promise<any> {
     return Promise.resolve();
+  }
+
+  private initDBank(): DBank {
+    return {deposit: () => Promise.resolve()};
   }
 }
