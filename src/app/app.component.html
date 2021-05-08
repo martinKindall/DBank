@@ -5,8 +5,12 @@
     </div>
   </div>
   <div class="row my-4">
-    <div class="col-12">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
       <h3 *ngIf="loadedBalance === true">Eth Balance: {{balance}}</h3>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-success btn-sm" (click)="updateBalance()">Actualizar</button>
     </div>
   </div>
   <div class="row">
