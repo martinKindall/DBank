@@ -30,7 +30,6 @@ export class Metamask implements WalletService {
       if (typeof selectedAccount !== 'undefined') {
         const balance = async () => web3.utils.fromWei(await web3.eth.getBalance(selectedAccount));
         const dBank = this.initDBank(web3, netId, selectedAccount);
-        console.log(`The balance is ${balance}`);
         return Promise.resolve({balance, dBank});
       } else {
         errMsg = 'Please login with MetaMask and connect the account to this site.';
@@ -44,18 +43,20 @@ export class Metamask implements WalletService {
     }
   }
 
-  public deposit(amount: number): Promise<any> {
-    return Promise.resolve();
-  }
-
-  private initDBank(web3: any, networkdId: number, account: string): DBank {
-    const dbank = new web3.eth.Contract(DBankJson.abi, DBankJson.networks[networkdId].address);
-    console.log(DBankJson.contractName);
-    return {deposit: (value: number) => {
+  private initDBank(web3: any, networkId: number, account: string): DBank {
+    const dbank = new web3.eth.Contract(DBankJson.abi, DBankJson.networks[networkId].address);
+    return {
+      deposit: (value: number) => {
         return dbank.methods.deposit().send({
           value: web3.utils.toWei(value).toString(),
           from: account
         });
-      }};
+      },
+      withdraw(): Promise<any> {
+        return dbank.methods.withdraw().send({
+          from: account
+        });
+      }
+    };
   }
 }

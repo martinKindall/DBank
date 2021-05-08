@@ -31,7 +31,12 @@ export class AppComponent implements OnInit {
 
   depositar(): void {
     this.accountState?.dBank.deposit((this.depositAmount))
-      .then(() => this.updateBalance);
+      .then();
+  }
+
+  retirar(): void {
+    this.accountState?.dBank.withdraw()
+      .then();
   }
 
   private updateBalance(): Promise<any> {
