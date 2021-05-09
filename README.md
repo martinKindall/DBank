@@ -28,3 +28,23 @@ truffle migrate
 ```bash
 truffle test
 ```
+
+## Launch Frontend Application
+
+Go back to the root of the proyect, if not already there, and run:
+
+```bash
+cd ..
+npm start
+```
+
+Visit http://localhost:4200
+
+## Connect Metamask to one of the Ganache Accounts
+
+- Make sure you are running Ganache. Then pick the first account and copy its private key.
+- Go to http://localhost:4200
+- On Metamask, add a new Network, with URL http://localhost, 7545 as port and chain ID 1337. Use this network for development.
+- Also in Metamask import an account -> specify the private key you copied from the Ganache first account. __Warning__: do not use this account as a real account.
+- Reload the webapp. 
+ 
